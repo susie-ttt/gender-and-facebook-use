@@ -1,0 +1,47 @@
+---
+title: "gender and facebook use"
+output: html_document
+date: "2026-11-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+```
+
+```{r}
+BES_2017_f2f_gender_fb_tw <- read_csv("../BES-2017-f2f-gender-fb-tw.csv")
+```
+```{r}
+ggplot(data = BES_2017_f2f_gender_fb_tw, aes(x = Gender)) +
+  geom_bar()
+```
+```{r}
+ggplot(data = BES_2017_f2f_gender_fb_tw, aes(x = Use_Facebook)) +
+  geom_bar()
+```
+```{r}
+ggplot(data = BES_2017_f2f_gender_fb_tw,
+       aes(x = Gender, fill = Use_Facebook)) +
+  geom_bar(position = "fill")
+```
+```{r}
+gender_facebook_table <- table(
+  BES_2017_f2f_gender_fb_tw$Gender,
+  BES_2017_f2f_gender_fb_tw$Use_Facebook
+)
+
+gender_facebook_table
+```
+```{r}
+chi_result <- chisq.test(gender_facebook_table)
+
+chi_result
+chi_result$expected
+```
+
